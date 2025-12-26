@@ -28,7 +28,9 @@
 ├── browser.py   # 浏览器创建 & Cookie 注入
 ├── checkin.py   # 登录检测 & 签到逻辑
 ├── main.py      # 程序入口 & 多账号调度
-└── README.md
+├── requirements.txt
+├── README.md
+└── LICENSE
 ```
 
 ## 🚀 使用方式
@@ -36,7 +38,7 @@
 ### 1️⃣ 安装依赖
 请先确保系统中已安装 **Chrome / Chromium**，然后执行：
 ```bash
-pip install selenium undetected-chromedriver
+pip install -r requirements.txt
 ```
 ### 2️⃣ 获取 Cookie
 使用浏览器登录：https://www.nodeloc.com
