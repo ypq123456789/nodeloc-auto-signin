@@ -30,25 +30,3 @@
 ├── main.py      # 程序入口 & 多账号调度
 └── README.md
 
-🚀 使用方式
-1️⃣ 安装依赖
-
-请先确保系统中已安装 Chrome / Chromium，然后执行：
-
-pip install selenium undetected-chromedriver
-
-2️⃣ 获取 Cookie
-
-使用浏览器登录：https://www.nodeloc.com
-
-打开开发者工具（F12）
-
-在以下任一位置获取完整 Cookie：
-
-Network → 请求头（Request Headers）
-
-Application → Cookies
-
-将 Cookie 复制为一行字符串，例如：
-
-_t=xxxxx; _forum_session=xxxxxx
