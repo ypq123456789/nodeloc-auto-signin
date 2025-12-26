@@ -23,10 +23,13 @@
 
 ## 📁 项目结构
 
-browser.py   # 浏览器创建 & Cookie 注入
-checkin.py   # 登录检测 & 签到逻辑
-main.py      # 程序入口 & 多账号调度
-README.md
+```text
+.
+├── browser.py   # 浏览器创建 & Cookie 注入
+├── checkin.py   # 登录检测 & 签到逻辑
+├── main.py      # 程序入口 & 多账号调度
+└── README.md
+```
 
 ## 🚀 使用方式
 
@@ -34,3 +37,23 @@ README.md
 请先确保系统中已安装 **Chrome / Chromium**，然后执行：
 ```bash
 pip install selenium undetected-chromedriver
+```
+### 2️⃣ 获取 Cookie
+使用浏览器登录：https://www.nodeloc.com
+打开开发者工具（F12）
+在 Network / 请求头 / Application → Cookies 中获取完整 Cookie
+
+### 3️⃣ 设置环境变量（支持多账号）
+```bash
+export NL_COOKIE="_t=xxxxx; _forum_session=xxxxxx"
+```
+### 4️⃣ 运行脚本
+```bash
+python main.py
+```
+## 📜 License
+本项目采用 MIT License 开源协议。
+
+## ⭐ Star
+如果这个项目对你有帮助，欢迎点个 ⭐
+你的支持是我继续维护和优化的动力 ❤️
