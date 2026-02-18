@@ -38,9 +38,42 @@
 ## 🚀 使用方式
 
 ### 1️⃣ 安装依赖
-请先确保系统中已安装 **Chrome / Chromium**，然后执行：
+
+#### 安装 Chrome 浏览器
+
+**方法 A：自动安装（推荐）**
+```bash
+chmod +x install_chrome.sh
+./install_chrome.sh
+```
+
+**方法 B：手动安装 Google Chrome**
+```bash
+# 下载并安装
+cd /tmp
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt-get install -f -y
+
+# 验证安装
+google-chrome --version
+```
+
+**方法 C：安装 Chromium（备选）**
+```bash
+# Debian/Ubuntu
+sudo apt install chromium -y
+
+# 或者
+sudo apt install chromium-browser -y
+```
+
+#### 安装 Python 依赖
+
 ```bash
 pip install -r requirements.txt
+# 或
+pip3 install -r requirements.txt
 ```
 ### 2️⃣ 获取 Cookie
 使用浏览器登录：https://www.nodeloc.com
