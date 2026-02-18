@@ -47,29 +47,74 @@ pip install -r requirements.txt
 打开开发者工具（F12）
 在 Network / 请求头 / Application → Cookies 中获取完整 Cookie
 
-### 3️⃣ 设置环境变量（支持多账号）
+### 3️⃣ 配置环境变量
+
+#### 方式 A：使用 .env 文件（推荐）⭐
+
+```bash
+# 1. 复制示例文件
+cp .env.example .env
+
+# 2. 编辑 .env 文件并填入实际配置
+nano .env
+```
+
+#### 方式 B：使用启动脚本（推荐用于定时任务）⭐
+
+```bash
+# 创建 run.sh
+cat > run.sh << 'EOF'
+#!/bin/bash
+export TG_BOT_TOKEN="你的Bot_Token"
+export TG_CHAT_ID="你的Chat_ID"
+export NL_COOKIE="你的Cookie"
+cd "$(dirname "$0")"
+python3 main.py
+EOF
+
+chmod +x run.sh
+```
+
+#### 方式 C：临时环境变量
+
 ```bash
 export NL_COOKIE="_t=xxxxx; _forum_session=xxxxxx"
+export TG_BOT_TOKEN="你的Bot Token"  # 可选
+export TG_CHAT_ID="你的Chat ID"      # 可选
 ```
 
-**（可选）配置 Telegram 推送**
-```bash
-export TG_BOT_TOKEN="你的Bot Token"
-export TG_CHAT_ID="你的Chat ID"
-```
-
-**如何获取 Telegram Bot Token 和 Chat ID：**
-1. 与 [@BotFather](https://t.me/BotFather) 对话，创建一个新的 Bot，获取 Bot Token
-2. 将你的 Bot 添加到你的频道或群组，或直接与 Bot 私聊
-3. 与 [@userinfobot](https://t.me/userinfobot) 对话，获取你的 Chat ID
-4. 如果是群组，可以通过访问 `https://api.telegram.org/bot<你的token>/getUpdates` 获取 Chat ID
+**Telegram 推送配置（可选）：**
+- 与 [@BotFather](https://t.me/BotFather) 创建 Bot 获取 Token
+- 与 [@userinfobot](https://t.me/userinfobot) 获取 Chat ID
 
 ### 4️⃣ 运行脚本
 ```bash
 python main.py
+# 或使用启动脚本
+./run.sh
 ```
 
-> **注意**：如果未配置 Telegram 推送环境变量，程序仍会正常运行，只是不会推送消息。
+### 5️⃣ 设置定时任务（可选）
+
+使用 crontab 设置每天自动签到：
+
+```bash
+# 编辑 crontab
+crontab -e
+
+# 添加定时任务（每天 0:01 执行）
+1 0 * * * /root/nodeloc-auto-signin/run.sh >> /root/nodeloc-auto-signin/logs/cron.log 2>&1
+```
+
+**注意事项：**
+- 确保脚本路径正确
+- 创建日志目录：`mkdir -p /root/nodeloc-auto-signin/logs`
+- 确保服务器时区为北京时间：`timedatectl set-timezone Asia/Shanghai`
+
+> **提示**：未配置 Telegram 推送时程序仍会正常运行，只是不会发送通知消息。
+
+---
+
 ## 📜 License
 本项目采用 MIT License 开源协议。
 

@@ -2,6 +2,15 @@
 import os
 import time
 import logging
+
+# 尝试加载 .env 文件（如果存在）
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # 如果没有安装 python-dotenv，继续使用环境变量
+    pass
+
 from browser import create_browser, inject_cookies
 from checkin import (
     BASE_URL,
