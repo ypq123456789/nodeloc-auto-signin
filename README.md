@@ -115,7 +115,57 @@ crontab -e
 
 ---
 
-## 📜 License
+## � 故障排查
+
+### 问题：浏览器启动失败（版本不匹配）
+
+**症状：**
+```
+This version of ChromeDriver only supports Chrome version 145
+Current browser version is 120.0.6099.224
+```
+
+**解决方案：**
+
+```bash
+# 方法 1：清理驱动缓存（推荐）
+rm -rf ~/.local/share/undetected_chromedriver
+python3 main.py
+
+# 方法 2：使用检查脚本
+chmod +x check_chrome.sh
+./check_chrome.sh
+
+# 方法 3：更新 Chrome 浏览器
+# Ubuntu/Debian
+sudo apt update && sudo apt upgrade chromium-browser
+
+# CentOS/RHEL
+sudo yum update chromium
+```
+
+### 问题：Cookie 失效
+
+**症状：** 日志显示"登录失败，Cookie 可能失效"
+
+**解决方案：**
+1. 用无痕浏览器重新登录 NodeLoc
+2. F12 → Application → Cookies → 复制新的 Cookie
+3. 更新 `.env` 文件或 `run.sh` 中的 `NL_COOKIE`
+
+### 问题：Telegram 推送失败
+
+**检查：**
+```bash
+# 测试 Token 和 Chat ID 是否正确
+curl -X POST "https://api.telegram.org/bot<你的TOKEN>/sendMessage" \
+  -d "chat_id=<你的CHAT_ID>" \
+  -d "text=测试消息"
+```
+
+---
+
+## �📜 License
 本项目采用 MIT License 开源协议。
 
 ## ⭐ Star
