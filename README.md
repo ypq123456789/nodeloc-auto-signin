@@ -82,38 +82,30 @@ pip3 install -r requirements.txt
 
 ### 3️⃣ 配置环境变量
 
-#### 方式 A：使用 .env 文件（推荐）⭐
+**使用 .env 文件配置：**
 
 ```bash
 # 1. 复制示例文件
 cp .env.example .env
 
-# 2. 编辑 .env 文件并填入实际配置
+# 2. 编辑 .env 文件
 nano .env
+
+# 3. 填入配置（示例）
+TG_BOT_TOKEN=你的Bot_Token
+TG_CHAT_ID=你的Chat_ID
+NL_COOKIE=_t=xxxxx; _forum_session=xxxxxx
+
+# 4. 保存并设置权限
+chmod 600 .env
 ```
 
-#### 方式 B：使用启动脚本（推荐用于定时任务）⭐
-
+**多账号配置示例：**
 ```bash
-# 创建 run.sh
-cat > run.sh << 'EOF'
-#!/bin/bash
-export TG_BOT_TOKEN="你的Bot_Token"
-export TG_CHAT_ID="你的Chat_ID"
-export NL_COOKIE="你的Cookie"
-cd "$(dirname "$0")"
-python3 main.py
-EOF
-
-chmod +x run.sh
-```
-
-#### 方式 C：临时环境变量
-
-```bash
-export NL_COOKIE="_t=xxxxx; _forum_session=xxxxxx"
-export TG_BOT_TOKEN="你的Bot Token"  # 可选
-export TG_CHAT_ID="你的Chat ID"      # 可选
+# .env 文件支持多行 Cookie
+NL_COOKIE=_t=account1; _forum_session=session1
+_t=account2; _forum_session=session2
+_t=account3; _forum_session=session3
 ```
 
 **Telegram 推送配置（可选）：**
@@ -122,9 +114,7 @@ export TG_CHAT_ID="你的Chat ID"      # 可选
 
 ### 4️⃣ 运行脚本
 ```bash
-python main.py
-# 或使用启动脚本
-./run.sh
+python3 main.py
 ```
 
 ### 5️⃣ 设置定时任务（可选）
@@ -132,17 +122,20 @@ python main.py
 使用 crontab 设置每天自动签到：
 
 ```bash
-# 编辑 crontab
+# 1. 创建日志目录
+mkdir -p ~/nodeloc-auto-signin/logs
+
+# 2. 编辑 crontab
 crontab -e
 
-# 添加定时任务（每天 0:01 执行）
-1 0 * * * /root/nodeloc-auto-signin/run.sh >> /root/nodeloc-auto-signin/logs/cron.log 2>&1
+# 3. 添加定时任务（每天 0:01 执行）
+1 0 * * * cd ~/nodeloc-auto-signin && /usr/bin/python3 main.py >> ~/nodeloc-auto-signin/logs/cron.log 2>&1
 ```
 
 **注意事项：**
-- 确保脚本路径正确
-- 创建日志目录：`mkdir -p /root/nodeloc-auto-signin/logs`
+- 确保已配置 `.env` 文件
 - 确保服务器时区为北京时间：`timedatectl set-timezone Asia/Shanghai`
+- 查看执行日志：`tail -f ~/nodeloc-auto-signin/logs/cron.log`
 
 > **提示**：未配置 Telegram 推送时程序仍会正常运行，只是不会发送通知消息。
 
